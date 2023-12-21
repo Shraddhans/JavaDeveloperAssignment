@@ -1,9 +1,7 @@
 package com.assignment.shraddha.entity;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import java.time.LocalDate;
 @Entity
 @Table(name = "CustomerDetails", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @NoArgsConstructor
@@ -12,16 +10,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Name is required")
+    @NotBlank(message = "Name shouldn't be null or empty")
     private String name;
-    @Email(message = "Email should be valid")
-    @NotEmpty(message = "Email is required")
+    @NotBlank(message = "email shouldn't be null or empty")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid Email Id")
     private String email;
-    @NotNull(message = "Date of birth is required")
-    @Past(message = "Date of birth should be in the past")
-    private LocalDate dob;
-    //@Pattern(regexp = "^(developer|plumber|chef|carpenter|other)$", message = "Invalid occupation")
+    @NotBlank(message = "dob shouldn't be null or empty")
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Date of birth must be in yyyy-MM-dd format")
+    private String dob;
     @Enumerated(EnumType.STRING)
+
+    @NotNull(message = "occupation shouldn't be null or empty")
     private Occupation occupation;
     @Enumerated(EnumType.STRING)
     private CustomerGroup customerGroup;
@@ -49,11 +48,11 @@ public class Customer {
         this.email = email;
     }
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

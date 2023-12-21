@@ -28,8 +28,8 @@ public class SpringBootJUnitApplicationTests {
             Customer customer = new Customer();
             customer.setName("John Doe");
             customer.setEmail("johndoe@example.com");
-            customer.setDob(LocalDate.of(1990, 5, 15));
-            customer.setOccupation(Occupation.developer);
+            customer.setDob(String.valueOf(LocalDate.of(1990, 5, 15)));
+            customer.setOccupation(Occupation.DEVELOPER);
             when(customerRepository.save(customer)).thenReturn(customer);
             assertEquals(customer, customerService.saveCustomer(customer));
         }
